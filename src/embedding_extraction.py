@@ -6,8 +6,10 @@ import os
 from tqdm import tqdm
 
 MODEL_NAME = "answerdotai/ModernBERT-base" # Or point to the baseline model directory if fine-tuned
-NODE_MAPPING_PATH = r"d:\Capstone\fnd\outputs\graphs\node_mapping.csv"
-OUTPUT_DIR = r"d:\Capstone\fnd\outputs\embeddings"
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+NODE_MAPPING_PATH = os.path.join(BASE_DIR, "outputs", "graphs", "node_mapping.csv")
+OUTPUT_DIR = os.path.join(BASE_DIR, "outputs", "embeddings")
+MODEL_DIR = os.path.join(BASE_DIR, "outputs", "models", "modernbert_baseline")
 BATCH_SIZE = 64
 
 class NodeTextDataset(Dataset):
@@ -42,8 +44,9 @@ def extract_embeddings():
 
     print("Loading tokenizer and model...")
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-    # Load the fine-tuned weights!
-    model = AutoModelForSequenceClassification.from_pretrained(r"d:\Capstone\fnd\outputs\models\modernbert_baseline")
+    # Load the fine-tuned weights if available, else fallback to base model
+    model_to_load = MODEL_DIR if os.path.exists(MODEL_DIR) else MODEL_NAME
+    model = AutoModelForSequenceClassification.from_pretrained(model_to_load)
     model.to(device)
     model.eval()
 

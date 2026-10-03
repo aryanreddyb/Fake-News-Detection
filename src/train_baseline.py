@@ -7,12 +7,16 @@ from sklearn.metrics import accuracy_score, f1_score, classification_report
 import os
 import time
 
-from dataset import RedditTextDataset
+try:
+    from dataset import RedditTextDataset
+except ImportError:
+    from src.dataset import RedditTextDataset
 
 # Paths
-TRAIN_PATH = r"d:\Capstone\fnd\data\processed\train.csv"
-VAL_PATH = r"d:\Capstone\fnd\data\processed\validate.csv"
-MODEL_SAVE_DIR = r"d:\Capstone\fnd\outputs\models\modernbert_baseline"
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+TRAIN_PATH = os.path.join(BASE_DIR, "data", "processed", "train.csv")
+VAL_PATH = os.path.join(BASE_DIR, "data", "processed", "validate.csv")
+MODEL_SAVE_DIR = os.path.join(BASE_DIR, "outputs", "models", "modernbert_baseline")
 
 # Hyperparameters
 MODEL_NAME = "answerdotai/ModernBERT-base"

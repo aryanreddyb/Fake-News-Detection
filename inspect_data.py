@@ -1,7 +1,8 @@
 import pandas as pd
 import os
 
-data_dir = r"d:\Capstone\fnd\data"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+data_dir = os.path.join(BASE_DIR, "data")
 files = ["multimodal_train.tsv", "multimodal_validate.tsv", "multimodal_test_public.tsv"]
 
 def inspect_data():

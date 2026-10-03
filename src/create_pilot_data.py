@@ -1,7 +1,8 @@
 import pandas as pd
 import os
 
-DATA_DIR = r"d:\Capstone\fnd\data\processed"
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+DATA_DIR = os.path.join(BASE_DIR, "data", "processed")
 
 def create_pilot():
     print("Creating Pilot Dataset (10,000 rows total)...")

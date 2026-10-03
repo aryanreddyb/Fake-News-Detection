@@ -4,8 +4,9 @@ import os
 import itertools
 from tqdm import tqdm
 
-DATA_DIR = r"d:\Capstone\fnd\data\processed"
-OUTPUT_DIR = r"d:\Capstone\fnd\outputs\graphs"
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+DATA_DIR = os.path.join(BASE_DIR, "data", "processed")
+OUTPUT_DIR = os.path.join(BASE_DIR, "outputs", "graphs")
 
 def build_graph():
     print("Loading preprocessed datasets...")

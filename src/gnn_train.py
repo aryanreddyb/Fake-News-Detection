@@ -8,7 +8,8 @@ import argparse
 from sklearn.metrics import accuracy_score, f1_score, classification_report
 import time
 
-OUTPUT_DIR = r"d:\Capstone\fnd\outputs"
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+OUTPUT_DIR = os.path.join(BASE_DIR, "outputs")
 
 class GraphSAGEModel(torch.nn.Module):
     def __init__(self, in_channels, hidden_channels, out_channels, dropout=0.3):
