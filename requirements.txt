@@ -1,0 +1,9 @@
+pandas==2.2.0
+scikit-learn==1.4.0
+transformers==4.37.2
+sentencepiece
+tiktoken
+protobuf
+tqdm
+
+# Note: PyTorch and PyTorch Geometric should be installed separately based on the user's hardware (CUDA vs CPU).
