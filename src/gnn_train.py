@@ -141,6 +141,25 @@ def train_gnn(model_type="graphsage"):
     print(f"Training completed in {time.time() - start_time:.2f} seconds.")
     print(f"Best Validation F1: {best_val_f1:.4f}")
 
+    # --- Test Phase Evaluation ---
+    best_model_path = os.path.join(OUTPUT_DIR, "models", f"best_{model_type}.pt")
+    if os.path.exists(best_model_path):
+        print(f"\n--- Evaluating Best {model_type.upper()} Model on Unseen Test Set ---")
+        model.load_state_dict(torch.load(best_model_path, weights_only=True))
+        model.eval()
+        with torch.no_grad():
+            pred = model(data.x, data.edge_index).argmax(dim=1)
+            test_true = data.y[data.test_mask].cpu().numpy()
+            test_pred = pred[data.test_mask].cpu().numpy()
+
+            test_acc = accuracy_score(test_true, test_pred)
+            test_f1 = f1_score(test_true, test_pred)
+
+            print(f"Test Accuracy: {test_acc:.4f} ({test_acc * 100:.2f}%)")
+            print(f"Test F1 Score: {test_f1:.4f}")
+            print("\nClassification Report (Test Set):")
+            print(classification_report(test_true, test_pred, target_names=["Class 0 (Real)", "Class 1 (Fake)"], digits=4))
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", type=str, default="graphsage", choices=["graphsage", "gatv2"])
